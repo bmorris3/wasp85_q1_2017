@@ -12,7 +12,7 @@ __all__ = ['PCA_light_curve']
 
 def PCA_light_curve(pr, transit_parameters, buffer_time=5*u.min,
                     outlier_mad_std_factor=3.0, plots=False,
-                    validation_duration_fraction=1/15):
+                    validation_duration_fraction=1/6):
     """
     Parameters
     ----------
@@ -65,9 +65,9 @@ def PCA_light_curve(pr, transit_parameters, buffer_time=5*u.min,
         validation_duration = validation_duration_fraction * transit_duration
 
         validation_mask = ((Time(pr.times, format='jd') < mid_transit_time +
-                            0.6 * transit_duration + validation_duration / 2) &
+                            0.7 * transit_duration + validation_duration / 2) &
                            (Time(pr.times, format='jd') > mid_transit_time +
-                            0.6 * transit_duration - validation_duration / 2))
+                            0.7 * transit_duration - validation_duration / 2))
 
         oot = out_of_transit & inliers
         oot_no_validation = (out_of_transit & inliers & np.logical_not(validation_mask))

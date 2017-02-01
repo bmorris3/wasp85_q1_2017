@@ -12,7 +12,7 @@ __all__ = ['transit_model_b', 'transit_model_b_depth_t0', 'params_b']
 # Planet b:
 params_b = batman.TransitParams()
 params_b.per = 2.6556777
-params_b.t0 = 2456847.47286
+params_b.t0 = 2456847.472856
 params_b.inc = 89.69
 params_b.rp = np.sqrt(0.01870)
 
@@ -22,7 +22,7 @@ b = 0.047
 params_b.a = b / np.cos(np.radians(params_b.inc))
 params_b.ecc = 0
 params_b.w = 90
-params_b.u = [0.65, 0.28]
+params_b.u = [0.4636, 0.1846] # sdss r filter, claret 2013
 params_b.limb_dark = 'quadratic'
 
 params_b.depth_error = 0.00002

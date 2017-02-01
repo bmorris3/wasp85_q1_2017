@@ -50,6 +50,7 @@ def generate_master_flat_and_dark(flat_paths, dark_paths, master_flat_path,
 
     # Make master dark frame:
     testdata = fits.getdata(dark_paths[0])
+    dark_exposure_duration = fits.getheader(dark_paths[0])['EXPTIME']
     allflatdarks = np.zeros((testdata.shape[0], testdata.shape[1],
                              len(dark_paths)))
     for i, darkpath in enumerate(dark_paths):
@@ -60,10 +61,13 @@ def generate_master_flat_and_dark(flat_paths, dark_paths, master_flat_path,
 
     # Make master flat field:
     testdata = fits.getdata(flat_paths[0])
+    flat_exposure_duration = fits.getheader(flat_paths[0])['EXPTIME']
     allflats = np.zeros((testdata.shape[0], testdata.shape[1], len(flat_paths)))
 
     for i, flatpath in enumerate(flat_paths):
-        flat_dark_subtracted = fits.getdata(flatpath) - masterflatdark * 0.5
+        flat_dark_subtracted = (fits.getdata(flatpath) -
+                                masterflatdark *
+                                (flat_exposure_duration/dark_exposure_duration))
         allflats[:, :, i] = flat_dark_subtracted
 
     # do a median sky flat:
